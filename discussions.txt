@@ -1,0 +1,24 @@
+2026-02-27 00:00 - Sujet: Initialisation de la mémoire du projet
+Décisions/solutions: Création du fichier discussions.txt et première analyse automatique du projet.
+État d'avancement: Début du projet, structure Java NetBeans détectée, aucune fonctionnalité métier encore implémentée.
+Prochaines actions: Discuter avec l'utilisateur des objectifs fonctionnels de l'application GestionPharma (gestion stock, ventes, utilisateurs, etc.) puis concevoir l'architecture.
+
+2026-02-27 00:05 - Sujet: Conception gestion des produits pharmaceutiques (approvisionnement)
+Décisions/solutions: Choix de MySQL comme SGBD, définition des interfaces principales (Accueil, Création produit, Approvisionnement, À propos + écrans de liste/historique), liste préliminaire des tables (produits, fournisseurs, approvisionnements, lignes_approvisionnement, utilisateurs/paramètres en option) et des méthodes (DAO pour chaque entité, service d'initialisation de la base qui crée la BD et les tables au lancement si besoin).
+État d'avancement: Phase de conception, pas encore de code métier ni de scripts SQL implémentés.
+Prochaines actions: Valider le plan avec l'utilisateur puis implémenter la couche d’accès MySQL (connexion, création automatique de la base et des tables) et créer les premiers écrans Swing.
+
+2026-02-27 00:15 - Sujet: Implémentation connexion MySQL, création automatique de la BD et des tables, et création des entités/DAO
+Décisions/solutions: Ajout de la classe ConnexionDB (initialisation automatique de la base gestionpharma et des tables produit, appro, ligne_appro avec contraintes ON DELETE CASCADE). Modification de GestionPharma.main pour appeler initializeDatabase() puis lancer la fenêtre Acceuil. Création des classes métier Produit, Appro, LigneAppro et des DAO ProduitDAO, ApproDAO, LigneApproDAO avec méthodes de base (insert, update, delete, recherche, liste, mise à jour de stock).
+État d'avancement: Couche d'accès aux données en place (niveau minimum) et initialisation de la base fonctionnelle au démarrage. Interfaces Swing encore très simples.
+Prochaines actions: Concevoir et implémenter les interfaces graphiques de gestion des produits, de saisie d'approvisionnement et d'historique, en s'appuyant sur les DAO existants (avec gestion du stock et suppressions en cascade côté logique métier).
+
+2026-02-27 00:25 - Sujet: Création des interfaces Swing (Accueil, produits, approvisionnement, historique, à propos)
+Décisions/solutions: Modernisation de la fenêtre Acceuil avec boutons vers Gestion des produits, Approvisionnement, Historique approvisionnements et À propos. Création de ProduitFrame (CRUD produit + suppression en cascade avec MySQL), ApprovisionnementFrame (création d'un appro avec plusieurs lignes, mise à jour automatique du stock des produits), HistoriqueApproFrame (liste des appro, affichage des détails et suppression d'un appro avec ajustement du stock), AproposFrame (infos sur l'application). Les écrans s'appuient sur les DAO existants.
+État d'avancement: Première version fonctionnelle de la couche UI pour la gestion des produits et des approvisionnements. Flux de base opérationnel (création produits, appro, consultation et suppression avec mise à jour du stock).
+Prochaines actions: Améliorer l'ergonomie (validation plus poussée, filtres sur l'historique, éventuelle gestion d'utilisateurs) et écrire des tests manuels pour vérifier tous les cas (suppression produit avec appro, suppression appro, etc.).
+
+2026-02-27 00:35 - Sujet: Génération automatique de la référence d'approvisionnement et mise à jour de l'écran À propos
+Décisions/solutions: Ajout d'une génération automatique de la référence d'approvisionnement (8 caractères alphanumériques aléatoires) dans ApprovisionnementFrame, champ non modifiable par l'utilisateur et régénéré après chaque enregistrement d'appro. Mise à jour de AproposFrame pour afficher, sous la description de l'application, le texte \"réalisée par les étudiants de L1 Informatique 2026 du Groupe B: KINGONZI, NDAYA, AISE, KHANI, MONZOKONI\".
+État d'avancement: Détails d'UX améliorés (références automatiques cohérentes, crédits visibles dans l'écran À propos). Fonctionnalités principales d'approvisionnement et de gestion produits opérationnelles.
+Prochaines actions: Poursuivre les améliorations (recherches, filtres, validations supplémentaires) selon les besoins de l'utilisateur.
