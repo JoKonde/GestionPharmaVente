@@ -1,11 +1,8 @@
 package gestionpharmavente;
 
 
-
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -21,16 +18,16 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author JEM'S KABE FILM
  */
-public class ApprovisionnementFramee extends javax.swing.JFrame {
+public class VenteFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form ApprovisionnementFramee
+     * Gestion des ventes (similaire à l'appro mais en sortie de stock).
      */
     private final ProduitDAO produitDAO = new ProduitDAO();
-    private final ApproDAO approDAO = new ApproDAO();
-    private final LigneApproDAO ligneApproDAO = new LigneApproDAO();
+    private final VenteDAO venteDAO = new VenteDAO();
+    private final LigneVenteDAO ligneVenteDAO = new LigneVenteDAO();
     private List<Produit> produitsCombo = new ArrayList<>();
-    public ApprovisionnementFramee() {
+    public VenteFrame() {
         initComponents();
         setLocationRelativeTo(null);
         chargerProduitsDansCombo();
@@ -80,11 +77,6 @@ public class ApprovisionnementFramee extends javax.swing.JFrame {
         comboProduits = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         txtQte = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        txtPrixAchat = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        dateExpirationChooser = new com.toedter.calendar.JDateChooser();
         btnAjouterLigne = new javax.swing.JButton();
         btnSupprimerLigne = new javax.swing.JButton();
         btnValider = new javax.swing.JButton();
@@ -92,8 +84,8 @@ public class ApprovisionnementFramee extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tableLignes = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Approvisionnement");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Vente");
         setBackground(new java.awt.Color(51, 153, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -112,15 +104,6 @@ public class ApprovisionnementFramee extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Qté:");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel5.setText("FC");
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel6.setText("Prix d'achat:");
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel7.setText("Date d'expiration:");
-
         btnAjouterLigne.setText("Ajouter une ligne");
         btnAjouterLigne.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -128,14 +111,14 @@ public class ApprovisionnementFramee extends javax.swing.JFrame {
             }
         });
 
-        btnSupprimerLigne.setText("supprimer une ligne");
+        btnSupprimerLigne.setText("Supprimer une ligne");
         btnSupprimerLigne.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSupprimerLigneMouseClicked(evt);
             }
         });
 
-        btnValider.setText("Enregistrer");
+        btnValider.setText("Enregistrer la vente");
         btnValider.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnValiderMouseClicked(evt);
@@ -154,7 +137,7 @@ public class ApprovisionnementFramee extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID PRODUIT", "NOM PRODUIT", "QTE", "PRIX D'ACHAT", "DATE D'EXPIRATION"
+                "ID PRODUIT", "NOM PRODUIT", "QTE", "PRIX DE VENTE(FC)", "TOTAL (FC)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -184,10 +167,6 @@ public class ApprovisionnementFramee extends javax.swing.JFrame {
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtQte, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(dateExpirationChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -195,13 +174,7 @@ public class ApprovisionnementFramee extends javax.swing.JFrame {
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtRef, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPrixAchat, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(285, 285, 285)
                         .addComponent(btnAjouterLigne, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
@@ -227,24 +200,15 @@ public class ApprovisionnementFramee extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2)
-                        .addComponent(txtRef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6)
-                        .addComponent(txtPrixAchat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5))
+                        .addComponent(txtRef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnAjouterLigne, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(comboProduits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtQte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jLabel7))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(dateExpirationChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(comboProduits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtQte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -258,7 +222,6 @@ public class ApprovisionnementFramee extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAjouterLigneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAjouterLigneMouseClicked
-        // TODO add your handling code here:
         int idx = comboProduits.getSelectedIndex();
         if (idx < 0) {
             JOptionPane.showMessageDialog(this, "Veuillez sélectionner un produit.",
@@ -266,59 +229,33 @@ public class ApprovisionnementFramee extends javax.swing.JFrame {
             return;
         }
         String qteTxt = txtQte.getText().trim();
-        String prixTxt = txtPrixAchat.getText().trim();
-        if (qteTxt.isEmpty() || prixTxt.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Veuillez saisir la quantité et le prix d'achat.",
+        if (qteTxt.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Veuillez saisir la quantité.",
                     "Champs manquants", JOptionPane.WARNING_MESSAGE);
             return;
         }
-
-        // Date d'expiration OBLIGATOIRE et doit être > aujourd'hui
-        Date d = dateExpirationChooser.getDate();
-        if (d == null) {
-            JOptionPane.showMessageDialog(this, "Veuillez choisir la date d'expiration du produit.",
-                    "Date manquante", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        Calendar calToday = Calendar.getInstance();
-        calToday.set(Calendar.HOUR_OF_DAY, 0);
-        calToday.set(Calendar.MINUTE, 0);
-        calToday.set(Calendar.SECOND, 0);
-        calToday.set(Calendar.MILLISECOND, 0);
-
-        Calendar calExp = Calendar.getInstance();
-        calExp.setTime(d);
-        calExp.set(Calendar.HOUR_OF_DAY, 0);
-        calExp.set(Calendar.MINUTE, 0);
-        calExp.set(Calendar.SECOND, 0);
-        calExp.set(Calendar.MILLISECOND, 0);
-
-        if (!calExp.after(calToday)) {
-            JOptionPane.showMessageDialog(this,
-                    "La date d'expiration doit être strictement supérieure à la date d'aujourd'hui.",
-                    "Date d'expiration invalide", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String dateExp = sdf.format(d);
         try {
             int qte = Integer.parseInt(qteTxt);
-            double prix = Double.parseDouble(prixTxt);
+            if (qte <= 0) {
+                JOptionPane.showMessageDialog(this, "La quantité doit être strictement positive.",
+                        "Quantité invalide", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
             Produit p = produitsCombo.get(idx);
+            double prixVente = p.getPrixVente();
+            double total = qte * prixVente;
+
             DefaultTableModel model = (DefaultTableModel) tableLignes.getModel();
             model.addRow(new Object[]{
                 p.getId(),
                 p.getNom(),
                 qte,
-                prix,
-                dateExp.isEmpty() ? "-" : dateExp
+                prixVente,
+                total
             });
             txtQte.setText("");
-            txtPrixAchat.setText("");
-            dateExpirationChooser.setDate(null);
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Vérifiez les valeurs numériques (quantité, prix).",
+            JOptionPane.showMessageDialog(this, "Vérifiez la valeur numérique de la quantité.",
                     "Erreur de saisie", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnAjouterLigneMouseClicked
@@ -335,17 +272,16 @@ public class ApprovisionnementFramee extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSupprimerLigneMouseClicked
 
     private void btnValiderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnValiderMouseClicked
-        // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) tableLignes.getModel();
         if (model.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Ajoutez au moins une ligne d'approvisionnement.",
-                    "Approvisionnement vide", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ajoutez au moins une ligne de vente.",
+                    "Vente vide", JOptionPane.WARNING_MESSAGE);
             return;
         }
         try {
-            int idAppro = approDAO.ajouter(new Appro(new Date(), txtRef.getText().trim()));
-            if (idAppro <= 0) {
-                JOptionPane.showMessageDialog(this, "Impossible de créer l'approvisionnement.",
+            int idVente = venteDAO.ajouter(new Vente(new Date(), txtRef.getText().trim()));
+            if (idVente <= 0) {
+                JOptionPane.showMessageDialog(this, "Impossible de créer la vente.",
                         "Erreur", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -353,18 +289,17 @@ public class ApprovisionnementFramee extends javax.swing.JFrame {
                 int idProd = Integer.parseInt(model.getValueAt(i, 0).toString());
                 int qte    = Integer.parseInt(model.getValueAt(i, 2).toString());
                 double prix = Double.parseDouble(model.getValueAt(i, 3).toString());
-                String dateExpVal = model.getValueAt(i, 4).toString();
-                String dateExpSql = dateExpVal.equals("-") ? "" : dateExpVal;
 
-                LigneAppro l = new LigneAppro(idAppro, idProd, qte, prix, dateExpSql);
-                ligneApproDAO.ajouter(l);
-                produitDAO.mettreAJourStock(idProd, qte);
+                LigneVente l = new LigneVente(idVente, idProd, qte, prix);
+                ligneVenteDAO.ajouter(l);
+                // Vente = sortie de stock
+                produitDAO.mettreAJourStock(idProd, -qte);
             }
-            JOptionPane.showMessageDialog(this, "Approvisionnement enregistré avec succès.");
+            JOptionPane.showMessageDialog(this, "Vente enregistrée avec succès.");
             model.setRowCount(0);
             txtRef.setText(generateRandomRef());
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Erreur lors de l'enregistrement : " + ex.getMessage(),
+            JOptionPane.showMessageDialog(this, "Erreur lors de l'enregistrement de la vente : " + ex.getMessage(),
                     "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnValiderMouseClicked
@@ -391,20 +326,21 @@ public class ApprovisionnementFramee extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ApprovisionnementFramee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VenteFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ApprovisionnementFramee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VenteFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ApprovisionnementFramee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VenteFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ApprovisionnementFramee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VenteFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ApprovisionnementFramee().setVisible(true);
+                new VenteFrame().setVisible(true);
             }
         });
     }
@@ -415,18 +351,13 @@ public class ApprovisionnementFramee extends javax.swing.JFrame {
     private javax.swing.JButton btnSupprimerLigne;
     private javax.swing.JButton btnValider;
     private javax.swing.JComboBox<String> comboProduits;
-    private com.toedter.calendar.JDateChooser dateExpirationChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tableLignes;
     private javax.swing.JTextField txtDate;
-    private javax.swing.JTextField txtPrixAchat;
     private javax.swing.JTextField txtQte;
     private javax.swing.JTextField txtRef;
     // End of variables declaration//GEN-END:variables

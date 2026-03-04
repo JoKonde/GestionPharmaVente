@@ -29,9 +29,11 @@ public class Acceuil extends javax.swing.JFrame {
         btnHistorique = new javax.swing.JButton();
         btnApropos = new javax.swing.JButton();
         btnQuitter = new javax.swing.JButton();
+        btnAppro1 = new javax.swing.JButton();
+        btnAppro2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("GestionPharma - Accueil");
+        setTitle("GestionPharmaVente - Accueil");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabelTitre.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
@@ -47,7 +49,12 @@ public class Acceuil extends javax.swing.JFrame {
         });
 
         btnAppro.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
-        btnAppro.setText("Approvisionnement");
+        btnAppro.setText("Vente et Facturation");
+        btnAppro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnApproMouseClicked(evt);
+            }
+        });
         btnAppro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnApproActionPerformed(evt);
@@ -78,29 +85,52 @@ public class Acceuil extends javax.swing.JFrame {
             }
         });
 
+        btnAppro1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
+        btnAppro1.setText("Approvisionnement");
+        btnAppro1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAppro1MouseClicked(evt);
+            }
+        });
+        btnAppro1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAppro1ActionPerformed(evt);
+            }
+        });
+
+        btnAppro2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 24)); // NOI18N
+        btnAppro2.setText("Historique Vente");
+        btnAppro2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAppro2MouseClicked(evt);
+            }
+        });
+        btnAppro2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAppro2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(141, 141, 141)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnAppro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnProduits, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnHistorique, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnApropos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(133, 133, 133)
-                                .addComponent(btnQuitter, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabelTitre, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(jLabelTitre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(268, 268, 268)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnQuitter, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnApropos, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnAppro2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAppro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnProduits, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnHistorique, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+                        .addComponent(btnAppro1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(216, 216, 216))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,15 +139,19 @@ public class Acceuil extends javax.swing.JFrame {
                 .addComponent(jLabelTitre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnProduits, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(btnAppro, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(btnHistorique, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(btnAppro1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnHistorique, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
+                .addComponent(btnAppro, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnAppro2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
                 .addComponent(btnApropos, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(btnQuitter, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
 
         pack();
@@ -128,7 +162,7 @@ public class Acceuil extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProduitsActionPerformed
 
     private void btnApproActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApproActionPerformed
-        new ApprovisionnementFramee().setVisible(true);
+        
     }//GEN-LAST:event_btnApproActionPerformed
 
     private void btnHistoriqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoriqueActionPerformed
@@ -142,6 +176,29 @@ public class Acceuil extends javax.swing.JFrame {
     private void btnQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitterActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnQuitterActionPerformed
+
+    private void btnAppro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAppro1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAppro1ActionPerformed
+
+    private void btnApproMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnApproMouseClicked
+        // TODO add your handling code here:
+        new VenteFrame().setVisible(true);
+    }//GEN-LAST:event_btnApproMouseClicked
+
+    private void btnAppro2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAppro2MouseClicked
+        // TODO add your handling code here:
+        new HistoriqueVenteFrame().setVisible(true);
+    }//GEN-LAST:event_btnAppro2MouseClicked
+
+    private void btnAppro2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAppro2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAppro2ActionPerformed
+
+    private void btnAppro1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAppro1MouseClicked
+        // TODO add your handling code here:
+        new ApprovisionnementFramee().setVisible(true);
+    }//GEN-LAST:event_btnAppro1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -180,6 +237,8 @@ public class Acceuil extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAppro;
+    private javax.swing.JButton btnAppro1;
+    private javax.swing.JButton btnAppro2;
     private javax.swing.JButton btnApropos;
     private javax.swing.JButton btnHistorique;
     private javax.swing.JButton btnProduits;

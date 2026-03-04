@@ -76,9 +76,31 @@ public class ConnexionDB {
                     + "REFERENCES produit(id) ON DELETE CASCADE"
                     + ") ENGINE=InnoDB";
 
+            // Table vente (en-tête des ventes)
+            String createVente = "CREATE TABLE IF NOT EXISTS vente ("
+                    + "id INT AUTO_INCREMENT PRIMARY KEY,"
+                    + "date_vente DATETIME NOT NULL,"
+                    + "ref VARCHAR(100) NULL"
+                    + ") ENGINE=InnoDB";
+
+            // Table ligne_vente (détail des ventes)
+            String createLigneVente = "CREATE TABLE IF NOT EXISTS ligne_vente ("
+                    + "id INT AUTO_INCREMENT PRIMARY KEY,"
+                    + "id_vente INT NOT NULL,"
+                    + "id_prod INT NOT NULL,"
+                    + "qte INT NOT NULL,"
+                    + "prix_vente DECIMAL(10,2) NOT NULL,"
+                    + "CONSTRAINT fk_ligne_vente_vente FOREIGN KEY (id_vente) "
+                    + "REFERENCES vente(id) ON DELETE CASCADE,"
+                    + "CONSTRAINT fk_ligne_vente_produit FOREIGN KEY (id_prod) "
+                    + "REFERENCES produit(id) ON DELETE CASCADE"
+                    + ") ENGINE=InnoDB";
+
             stmt.executeUpdate(createProduit);
             stmt.executeUpdate(createAppro);
             stmt.executeUpdate(createLigneAppro);
+            stmt.executeUpdate(createVente);
+            stmt.executeUpdate(createLigneVente);
         }
     }
 

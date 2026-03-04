@@ -35,10 +35,6 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lbChargement" min="-2" pref="64" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" pref="713" max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="173" max="-2" attributes="0"/>
                       <Component id="jProgressBar1" min="-2" pref="424" max="-2" attributes="0"/>
@@ -52,7 +48,12 @@
                       <Component id="jLabel3" min="-2" pref="141" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="49" max="32767" attributes="0"/>
+              <EmptySpace pref="201" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Component id="jLabel1" min="-2" pref="713" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -81,9 +82,9 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI Semibold" size="24" style="1"/>
+          <Font name="Segoe UI Semibold" size="20" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="BIENVENUE DANS VOTRE APPLICATION DE GESTION PHARMA"/>
+        <Property name="text" type="java.lang.String" value="BIENVENUE DANS VOTRE APPLICATION DE GESTION PHARMA(VENTE)"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbChargement">
@@ -95,7 +96,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="18" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Groupe B"/>
+        <Property name="text" type="java.lang.String" value="Groupe A"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbPercent">

@@ -43,6 +43,8 @@ public class ProduitFramee extends javax.swing.JFrame {
         btnEnregistrer = new javax.swing.JButton();
         btnSupprimer = new javax.swing.JButton();
         btnRafraichir = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        txtPrixVente1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestion des produits");
@@ -52,7 +54,7 @@ public class ProduitFramee extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Nom", "Stock actuel", "Stock min", "Prix vente"
+                "ID", "Nom", "Stock actuel", "Stock min", "Prix vente (FC)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -121,6 +123,8 @@ public class ProduitFramee extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setText("Prix de vente:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -152,21 +156,29 @@ public class ProduitFramee extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnNouveau)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnEnregistrer)
-                                .addGap(40, 40, 40)
-                                .addComponent(btnSupprimer)
-                                .addGap(26, 26, 26)
-                                .addComponent(btnRafraichir))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtStockMin)
                                     .addComponent(txtStockActuel, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))
                                 .addGap(112, 112, 112)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 907, Short.MAX_VALUE)))))
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 907, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnNouveau)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnEnregistrer)
+                                        .addGap(40, 40, 40)
+                                        .addComponent(btnSupprimer)
+                                        .addGap(26, 26, 26)
+                                        .addComponent(btnRafraichir))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtPrixVente1)
+                                        .addGap(91, 91, 91)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -177,7 +189,7 @@ public class ProduitFramee extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
@@ -195,7 +207,11 @@ public class ProduitFramee extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtStockMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(79, 79, 79)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(txtPrixVente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNouveau)
                     .addComponent(btnEnregistrer)
@@ -228,7 +244,7 @@ public class ProduitFramee extends javax.swing.JFrame {
         txtNom.setText("");
         txtStockActuel.setText("0");
         txtStockMin.setText("");
-        txtPrixVente.setText("");
+        txtPrixVente1.setText("");
     }
 
     private void tableProduitsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProduitsMouseClicked
@@ -238,7 +254,7 @@ public class ProduitFramee extends javax.swing.JFrame {
             txtNom.setText(tableProduits.getValueAt(row, 1).toString());
             txtStockActuel.setText(tableProduits.getValueAt(row, 2).toString());
             txtStockMin.setText(tableProduits.getValueAt(row, 3).toString());
-            txtPrixVente.setText(tableProduits.getValueAt(row, 4).toString());
+            txtPrixVente1.setText(tableProduits.getValueAt(row, 4).toString());
         }
     }//GEN-LAST:event_tableProduitsMouseClicked
 
@@ -271,7 +287,7 @@ public class ProduitFramee extends javax.swing.JFrame {
         // TODO add your handling code here:
         String nom = txtNom.getText().trim();
         String stockMinTxt = txtStockMin.getText().trim();
-        String prixVenteTxt = txtPrixVente.getText().trim();
+        String prixVenteTxt = txtPrixVente1.getText().trim();
         if (nom.isEmpty() || stockMinTxt.isEmpty() || prixVenteTxt.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Veuillez remplir le nom, le stock minimum et le prix de vente.",
                     "Champs manquants", JOptionPane.WARNING_MESSAGE);
@@ -345,12 +361,14 @@ public class ProduitFramee extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelPrixVente;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableProduits;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNom;
     private javax.swing.JTextField txtPrixVente;
+    private javax.swing.JTextField txtPrixVente1;
     private javax.swing.JTextField txtStockActuel;
     private javax.swing.JTextField txtStockMin;
     // End of variables declaration//GEN-END:variables
