@@ -62,7 +62,7 @@ public class HistoriqueApproFramee extends javax.swing.JFrame {
         btnDetails = new javax.swing.JButton();
         btnSupprimerAppro = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Historique des approvisionnements");
 
         tableAppro.setModel(new javax.swing.table.DefaultTableModel(

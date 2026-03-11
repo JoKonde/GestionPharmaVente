@@ -64,8 +64,8 @@ public class HistoriqueVenteFrame extends javax.swing.JFrame {
         btnSupprimerAppro = new javax.swing.JButton();
         btnFac2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Historique des approvisionnements");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Historique de vente");
 
         tableAppro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

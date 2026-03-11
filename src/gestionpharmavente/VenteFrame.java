@@ -85,7 +85,7 @@ public class VenteFrame extends javax.swing.JFrame {
         tableLignes = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Vente");
+        setTitle("Approvisionnement");
         setBackground(new java.awt.Color(51, 153, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -111,14 +111,14 @@ public class VenteFrame extends javax.swing.JFrame {
             }
         });
 
-        btnSupprimerLigne.setText("Supprimer une ligne");
+        btnSupprimerLigne.setText("supprimer une ligne");
         btnSupprimerLigne.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSupprimerLigneMouseClicked(evt);
             }
         });
 
-        btnValider.setText("Enregistrer la vente");
+        btnValider.setText("Enregistrer");
         btnValider.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnValiderMouseClicked(evt);
@@ -244,7 +244,19 @@ public class VenteFrame extends javax.swing.JFrame {
             Produit p = produitsCombo.get(idx);
             double prixVente = p.getPrixVente();
             double total = qte * prixVente;
-
+            int stockDispo = p.getStockActuel();
+                    
+             if (qte + qte > stockDispo) {
+                int restant = stockDispo - qte;
+                JOptionPane.showMessageDialog(this,
+                        "Quantité en stock insuffisante pour cet produit.\n"
+                        + "Stock disponible actuel: " + stockDispo + "\n"
+                        + "Déjà dans la vente: " + qte + "\n"
+                        + "Vous pouvez encore vendre au maximum: " + Math.max(restant, 0),
+                        "Stock insuffisant", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
             DefaultTableModel model = (DefaultTableModel) tableLignes.getModel();
             model.addRow(new Object[]{
                 p.getId(),
